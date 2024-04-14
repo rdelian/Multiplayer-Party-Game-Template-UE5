@@ -4,9 +4,9 @@
 #include "Minigames/SumoMinigame.h"
 #include "Components/BoxComponent.h"
 #include "MyCharacter.h"
+#include "Gameplay/GM_Gameplay.h"
 
-
-ASumoMinigame::ASumoMinigame() : Super() {
+ASumoMinigame::ASumoMinigame() {
 	TriggerBox = CreateDefaultSubobject<UBoxComponent>(TEXT("TriggerBox"));
 	TriggerBox->SetupAttachment(RootComponent);
 	TriggerBox->SetBoxExtent(FVector(5000.0f, 5000.0f, 20.f));
