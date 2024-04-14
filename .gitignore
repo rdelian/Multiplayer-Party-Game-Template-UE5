@@ -1,5 +1,9 @@
-# Visual Studio 2015 user specific files
+**/desktop.ini
+Content/Developers
+
+# Visual Studio user specific files
 .vs/
+.vsconfig
 
 # Compiled Object files
 *.slo
