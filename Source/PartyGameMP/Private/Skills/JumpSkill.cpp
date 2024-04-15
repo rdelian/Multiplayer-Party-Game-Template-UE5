@@ -11,11 +11,14 @@ UJumpSkill::UJumpSkill() {
 	Tag = FName("JUMP_SKILL");
 }
 
-// Yes yes, I could have used ACharacter->Jump() but where's the fun? :)
+// TODO: Do a ground ray cast check
 void UJumpSkill::Interact() {
 	FVector Direction = FVector(0, 0, 1.0f) * Power;
 
+	/**
+	 * Yes yes, I could have used ACharacter->Jump() but where is the fun? :)
+	 * I'm doing this only to show how to add impulse/force to the character
+	 * Also if you'd like to avoid casting, you could store the character movement component in a variable on BeginPlay
+	 */
 	Cast<UCharacterMovementComponent>(Character->GetMovementComponent())->AddImpulse(Direction, true);
-
-	Super::BeginCooldown();
 }

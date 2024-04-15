@@ -20,6 +20,10 @@ void UBumpSkill::BeginPlay() {
 	Character->OnActorBeginOverlap.AddDynamic(this, &UBumpSkill::OnOverlapBegin);
 }
 
+void UBumpSkill::Interact() {
+	/* This skill functionality is automatic, there is no need for user input */
+}
+
 void UBumpSkill::OnOverlapBegin(AActor* LocalActor, AActor* OtherActor) {
 	if (!bAvailable) return;
 	if (!Cast<ACharacter>(OtherActor)) return;

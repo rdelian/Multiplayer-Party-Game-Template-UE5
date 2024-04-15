@@ -45,10 +45,8 @@ protected:
 	TObjectPtr<AGM_Gameplay> GameModeRef;
 
 	virtual void BeginPlay() override;
+	virtual void Tick(float DeltaTime) override;
 
 	UFUNCTION(BlueprintCallable)
 	virtual void Start();
-
-public:
-	virtual void Tick(float DeltaTime) override;
 };

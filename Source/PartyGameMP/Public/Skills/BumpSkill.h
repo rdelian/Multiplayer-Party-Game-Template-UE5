@@ -18,6 +18,7 @@ protected:
 	UBumpSkill();
 
 	virtual void BeginPlay() override;
+	virtual void Interact() override;
 
 	UFUNCTION()
 	void OnOverlapBegin(AActor* LocalActor, AActor* OtherActor);
