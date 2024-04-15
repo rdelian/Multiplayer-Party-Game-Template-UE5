@@ -81,6 +81,11 @@ private:
 	void EndMatch();
 
 	/**
+	 * @brief Add the skills component to players pawn based on the current minigame
+	 */
+	void SetPlayersSkills();
+
+	/**
 	 * @brief Update alive players count and check if the round/match ShouldEnd()
 	 * @param PlayerCharacter Current player pawn
 	 */

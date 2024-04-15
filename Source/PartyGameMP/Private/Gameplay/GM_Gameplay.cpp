@@ -8,6 +8,8 @@
 #include "GameFramework/PlayerController.h"
 #include "Minigames/SumoMinigame.h"
 #include "MinigameBase.h"
+#include "Gameplay/GS_Gameplay.h"
+#include "SkillBase.h"
 
 AGM_Gameplay::AGM_Gameplay() {
 	PrimaryActorTick.bCanEverTick = true;
@@ -75,6 +77,8 @@ bool AGM_Gameplay::ShouldStart() const {
 void AGM_Gameplay::StartRound() {
 	PlayersAlive = PlayersNum;
 	MatchState = EMatchState::STARTED;
+
+	SetPlayersSkills();
 
 	UE_LOG(LogTemp, Warning, TEXT("[%hs] Call OnRoundStarted. %d"), __FUNCTION__, GameInstanceRef->MinPlayersToStartRound);
 	OnRoundStarted.Broadcast();
@@ -170,4 +174,16 @@ void AGM_Gameplay::Logout(AController* Exiting) {
 	}
 
 	Super::Logout(Exiting);
+}
+
+void AGM_Gameplay::SetPlayersSkills() {
+	auto GsRef = Cast<AGameStateBase>(GameState);
+
+	for (const auto& Ps : GsRef->PlayerArray) {
+		if (TObjectPtr<APawn> PlayerPawn = Ps->GetPawn()) {
+			for (const auto& SkillComponent : GameInstanceRef->GetCurrentMinigame().SkillsClass) {
+				PlayerPawn->AddComponentByClass(SkillComponent, false, FTransform::Identity, false);
+			}
+		}
+	}
 }
