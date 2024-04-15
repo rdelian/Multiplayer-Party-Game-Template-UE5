@@ -6,8 +6,10 @@
 #include "GameFramework/CharacterMovementComponent.h"
 
 UBumpSkill::UBumpSkill() {
+	Name = FText::FromString("[A] Bump");
 	Power = 1.5f;
 	Cooldown = 0.5f;
+	Tag = FName("BUMP_SKILL");
 }
 
 void UBumpSkill::BeginPlay() {
@@ -19,7 +21,7 @@ void UBumpSkill::BeginPlay() {
 }
 
 void UBumpSkill::OnOverlapBegin(AActor* LocalActor, AActor* OtherActor) {
-	if (!Available) return;
+	if (!bAvailable) return;
 	if (!Cast<ACharacter>(OtherActor)) return;
 
 	FVector LocalVelocity = LocalActor->GetVelocity();

@@ -12,34 +12,41 @@ UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent), Blueprintabl
 class PARTYGAMEMP_API USkillBase : public UActorComponent {
 	GENERATED_BODY()
 
+public:
+	UFUNCTION(BlueprintCallable)
+	void TryToInteract();
+
 protected:
 	USkillBase();
 
 	TObjectPtr<AMyCharacter> Character;
 
-	UPROPERTY(BlueprintReadOnly)
-	FString Name;
+	UPROPERTY(EditDefaultsOnly)
+	FText Name;
 
-	UPROPERTY(BlueprintReadOnly)
+	UPROPERTY(EditDefaultsOnly)
 	float Cooldown;
 
-	UPROPERTY(BlueprintReadOnly)
-	bool Available;
+	UPROPERTY(EditDefaultsOnly)
+	bool bAvailable;
 
-	UPROPERTY(BlueprintReadOnly)
+	UPROPERTY(EditDefaultsOnly)
 	float Power;
 
-	/*
-	* Bind on different InputActions, should be overriden in child classes
-	*/
-	UFUNCTION(BlueprintCallable)
-	virtual void Interact();
+	UPROPERTY(EditDefaultsOnly)
+	FName Tag;
 
 	/*
-	* Set the Available variable to true after the cooldown delay
-	*/
+	 * Sets bAvailable to false and then to true after the Cooldown delay
+	 */
 	UFUNCTION(BlueprintCallable)
 	void BeginCooldown();
+
+	/*
+	 * Actual skill functionality, should be overriden in child classes
+	 */
+	UFUNCTION(BlueprintCallable)
+	virtual void Interact();
 
 protected:
 	virtual void BeginPlay() override;

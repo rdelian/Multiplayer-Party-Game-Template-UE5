@@ -5,10 +5,10 @@
 #include "GameFramework/CharacterMovementComponent.h"
 
 UJumpSkill::UJumpSkill() {
-	PrimaryComponentTick.bCanEverTick = true;
-
+	Name = FText::FromString("Jump");
 	Power = 500.0f;
 	Cooldown = 1.0f;
+	Tag = FName("JUMP_SKILL");
 }
 
 // Yes yes, I could have used ACharacter->Jump() but where's the fun? :)
