@@ -63,4 +63,7 @@ protected:
 
 	// Called for look action
 	void Look(const FInputActionValue& Value);
+
+	// Called for jump ability
+	void JumpAbility(const FInputActionValue& Value);
 };

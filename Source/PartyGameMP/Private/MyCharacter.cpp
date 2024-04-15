@@ -10,6 +10,7 @@
 #include "Camera/CameraComponent.h"
 #include "EnhancedInputComponent.h"
 #include "Engine/LocalPlayer.h"
+#include "SkillBase.h"
 
 AMyCharacter::AMyCharacter() {
 	PrimaryActorTick.bCanEverTick = false;
@@ -57,7 +58,7 @@ void AMyCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompone
 
 	EnhancedInputComponent->BindAction(MovementAction, ETriggerEvent::Triggered, this, &AMyCharacter::Move);
 	EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &AMyCharacter::Look);
-	//EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Triggered, this, &ACharacter::Jump);
+	EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Started, this, &AMyCharacter::JumpAbility);
 }
 
 void AMyCharacter::Move(const FInputActionValue& Value) {
@@ -73,4 +74,11 @@ void AMyCharacter::Look(const FInputActionValue& Value) {
 	const FVector2D InputAxisVector = Value.Get<FVector2D>();
 
 	SpringArm->AddRelativeRotation(FRotator(-InputAxisVector.Y, InputAxisVector.X, 0.0f), false);
+}
+
+void AMyCharacter::JumpAbility(const FInputActionValue& Value) {
+	/* We could have stored the ability component, but the operation is very fast - testing for microseconds still shows 0.000000 */
+	if (USkillBase* JumpSkill = FindComponentByTag<USkillBase>("JUMP_SKILL")) {
+		JumpSkill->TryToInteract();
+	}
 }
