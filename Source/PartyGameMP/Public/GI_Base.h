@@ -6,8 +6,6 @@
 
 #include "Engine/GameInstance.h"
 #include "Interfaces/OnlineSessionInterface.h"
-#include "Online/OnlineSessionNames.h"
-#include "OnlineSubsystem.h"
 #include "OnlineSessionSettings.h"
 #include "MiniGameBase.h"
 
@@ -17,7 +15,6 @@ USTRUCT(BlueprintType)
 struct FServerData {
 	GENERATED_BODY()
 
-public:
 	UPROPERTY(BlueprintReadOnly)
 	int32 Id;
 
@@ -60,7 +57,6 @@ public:
 	UFUNCTION(BlueprintCallable)
 	FORCEINLINE FMinigameData GetCurrentMinigame() const { return CurrentMinigameRow; };
 
-
 private:
 	IOnlineSessionPtr SessionInterfaceRef;
 	TSharedPtr<FOnlineSessionSearch> SessionSearch;
@@ -75,12 +71,12 @@ private:
 	FMinigameData CurrentMinigameRow;
 
 	UGI_Base();
-	~UGI_Base();
+	virtual ~UGI_Base() override;
 
-	void Init() override;
+	virtual void Init() override;
 
 	void OnCreateSessionComplete(FName SessionName, bool bWasSuccessful);
-	void OnFindSessionComplete(bool bWasSuccesful);
+	void OnFindSessionComplete(bool bWasSuccessful);
 	void OnJoinSessionComplete(FName SessionName, EOnJoinSessionCompleteResult::Type Result);
 	void OnSessionFailure(const FUniqueNetId& UserId, ESessionFailure::Type FailureType);
 
@@ -91,7 +87,7 @@ private:
 	void SearchServers();
 
 	UFUNCTION(BlueprintCallable)
-	void JoinServer(int32 atIndex);
+	void JoinServer(int32 AtIndex);
 
 	UFUNCTION(BlueprintCallable)
 	void DestroySession();

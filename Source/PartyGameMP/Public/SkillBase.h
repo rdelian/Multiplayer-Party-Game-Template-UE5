@@ -19,6 +19,7 @@ public:
 protected:
 	USkillBase();
 
+	UPROPERTY()
 	TObjectPtr<AMyCharacter> Character;
 
 	UPROPERTY(EditDefaultsOnly)
@@ -33,6 +34,10 @@ protected:
 	UPROPERTY(EditDefaultsOnly)
 	float Power;
 
+	/**
+	 * Used by the player character to FindComponentByTag which is removing the need to
+	 *  include the specific skill header (required by FindComponentByClass)
+	 */
 	UPROPERTY(EditDefaultsOnly)
 	FName Tag;
 
@@ -43,7 +48,7 @@ protected:
 	void BeginCooldown();
 
 	/*
-	 * Actual skill functionality, should be overriden in child classes
+	 * The actual skill logic, should be overriden in child classes
 	 */
 	UFUNCTION(BlueprintCallable)
 	virtual void Interact();

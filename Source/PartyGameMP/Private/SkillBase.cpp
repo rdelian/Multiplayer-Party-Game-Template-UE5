@@ -32,7 +32,8 @@ void USkillBase::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompo
 }
 
 void USkillBase::TryToInteract() {
-	if (!bAvailable) return;
+	if (!bAvailable)
+		return;
 
 	Interact();
 	BeginCooldown();
@@ -49,7 +50,7 @@ void USkillBase::BeginCooldown() {
 	 */
 
 	FTimerHandle TimerHandle;
-	FTimerDelegate TimerDelegate = FTimerDelegate::CreateWeakLambda(this, [this]() { bAvailable = true; });
+	const FTimerDelegate TimerDelegate = FTimerDelegate::CreateWeakLambda(this, [this]() { bAvailable = true; });
 
 	bAvailable = false;
 

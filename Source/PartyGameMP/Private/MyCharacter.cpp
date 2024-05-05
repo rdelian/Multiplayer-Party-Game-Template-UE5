@@ -4,7 +4,6 @@
 #include "MyCharacter.h"
 
 #include "GameFramework/SpringArmComponent.h"
-#include "GameFramework/PlayerState.h"
 #include "EnhancedInputSubsystems.h"
 #include "Components/BoxComponent.h"
 #include "Camera/CameraComponent.h"
@@ -14,7 +13,7 @@
 
 AMyCharacter::AMyCharacter() {
 	PrimaryActorTick.bCanEverTick = false;
-
+	
 	// Create spring arm
 	SpringArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("SpringArm"));
 	SpringArm->SetupAttachment(RootComponent);
@@ -36,11 +35,14 @@ AMyCharacter::AMyCharacter() {
 void AMyCharacter::BeginPlay() {
 	Super::BeginPlay();
 
-	APlayerController* Pc = Cast<APlayerController>(Controller);
-	if (!Pc) return;
+	const APlayerController* Pc = Cast<APlayerController>(Controller);
+	if (!Pc)
+		return;
 
-	UEnhancedInputLocalPlayerSubsystem* EnhancedInputSubsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(Pc->GetLocalPlayer());
-	if (!EnhancedInputSubsystem) return;
+	UEnhancedInputLocalPlayerSubsystem* EnhancedInputSubsystem = ULocalPlayer::GetSubsystem<
+		UEnhancedInputLocalPlayerSubsystem>(Pc->GetLocalPlayer());
+	if (!EnhancedInputSubsystem)
+		return;
 
 	EnhancedInputSubsystem->AddMappingContext(DefaultMappingContext, 0);
 }
@@ -54,7 +56,8 @@ void AMyCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompone
 
 	UEnhancedInputComponent* EnhancedInputComponent = Cast<UEnhancedInputComponent>(PlayerInputComponent);
 
-	if (!EnhancedInputComponent) return;
+	if (!EnhancedInputComponent)
+		return;
 
 	EnhancedInputComponent->BindAction(MovementAction, ETriggerEvent::Triggered, this, &AMyCharacter::Move);
 	EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &AMyCharacter::Look);

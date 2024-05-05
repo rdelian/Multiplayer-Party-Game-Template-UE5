@@ -9,7 +9,7 @@
 UCLASS()
 class PARTYGAMEMP_API ASumoMinigame : public AMinigameBase {
 	GENERATED_BODY()
-	
+
 protected:
 	UPROPERTY(VisibleDefaultsOnly)
 	class UBoxComponent* TriggerBox;
@@ -20,5 +20,6 @@ protected:
 	virtual void Start() override;
 
 	UFUNCTION()
-	void OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+	void OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp,
+	                    int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 };

@@ -21,21 +21,22 @@ void ASumoMinigame::BeginPlay() {
 	Super::BeginPlay();
 
 	// Set the pos under the spawn points
-	FVector SpawnPointLocation = GameModeRef->FindPlayerStart(nullptr)->GetActorLocation();
+	const FVector SpawnPointLocation = GameModeRef->FindPlayerStart(nullptr)->GetActorLocation();
 	SetActorLocation(SpawnPointLocation - FVector(0.0f, 0.0f, 500.0f));
 
 	TriggerBox->OnComponentBeginOverlap.AddDynamic(this, &ASumoMinigame::OnOverlapBegin);
 
-	UE_LOG(LogTemp, Warning, TEXT("[%hs] TriggerBox Location set to: %s"), __FUNCTION__, *GetActorLocation().ToString());
+	UE_LOG(LogTemp, Warning, TEXT("[%hs] TriggerBox Location set to: %s"), __FUNCTION__,
+	       *GetActorLocation().ToString());
 }
 
 void ASumoMinigame::Start() {
 	UE_LOG(LogTemp, Warning, TEXT("[%hs]"), __FUNCTION__);
 }
 
-void ASumoMinigame::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult) {
-	UE_LOG(LogTemp, Warning, TEXT("[%hs] %s"), __FUNCTION__, *OtherActor->GetName());
-
+void ASumoMinigame::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
+                                   UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep,
+                                   const FHitResult& SweepResult){
 	if (AMyCharacter* PlayerPawn = Cast<AMyCharacter>(OtherActor)) {
 		PlayerPawn->Destroy();
 	}

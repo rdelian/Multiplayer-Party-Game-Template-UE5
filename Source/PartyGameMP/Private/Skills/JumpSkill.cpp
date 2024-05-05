@@ -13,7 +13,7 @@ UJumpSkill::UJumpSkill() {
 
 // TODO: Do a ground ray cast check
 void UJumpSkill::Interact() {
-	FVector Direction = FVector(0, 0, 1.0f) * Power;
+	const FVector Direction = FVector(0, 0, 1.0f) * Power;
 
 	/**
 	 * Yes yes, I could have used ACharacter->Jump() but where is the fun? :)

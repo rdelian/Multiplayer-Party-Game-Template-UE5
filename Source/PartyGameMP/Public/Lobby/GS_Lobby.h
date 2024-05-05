@@ -21,7 +21,7 @@ class PARTYGAMEMP_API AGS_Lobby : public AGameStateBase
 	UPROPERTY(BlueprintAssignable)
 	FPlayersCountUpdateSignature OnPlayersCountUpdate;
 
-	void BeginPlay() override;
-	void Tick(float DeltaTime) override;
+	virtual void BeginPlay() override;
+	virtual void Tick(float DeltaTime) override;
 	
 };

@@ -9,6 +9,7 @@
 
 #include "MiniGameBase.generated.h"
 
+class AMinigameBase;
 class AGM_Gameplay;
 class USkillBase;
 
@@ -16,7 +17,6 @@ USTRUCT(BlueprintType)
 struct FMinigameData : public FTableRowBase {
 	GENERATED_BODY()
 
-public:
 	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly, meta = (DisplayName = "Title"))
 	FText Title;
 
@@ -30,10 +30,6 @@ public:
 	TArray<TSoftObjectPtr<UWorld>> Maps;
 };
 
-/* TODO LIST
- * [ ] Give Abilities (TSubclassOf<ASkillBase>) to players
- */
-
 UCLASS()
 class PARTYGAMEMP_API AMinigameBase : public AActor {
 	GENERATED_BODY()
@@ -42,6 +38,7 @@ public:
 	AMinigameBase();
 
 protected:
+	UPROPERTY()
 	TObjectPtr<AGM_Gameplay> GameModeRef;
 
 	virtual void BeginPlay() override;

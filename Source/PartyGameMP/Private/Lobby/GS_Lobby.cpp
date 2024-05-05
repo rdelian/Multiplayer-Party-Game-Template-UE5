@@ -20,7 +20,7 @@ void AGS_Lobby::BeginPlay() {
 void AGS_Lobby::Tick(float DeltaTime) {
 	Super::Tick(DeltaTime);
 
-	int CurrentPlayersNum = PlayerArray.Num();
+	const int CurrentPlayersNum = PlayerArray.Num();
 
 	if (PlayersCount == CurrentPlayersNum) return;
 

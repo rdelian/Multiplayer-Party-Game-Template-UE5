@@ -27,7 +27,7 @@ class PARTYGAMEMP_API AMyCharacter : public ACharacter {
 	UCameraComponent* Camera;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
-	class UBoxComponent* TriggerBox;
+	TObjectPtr<UBoxComponent> TriggerBox;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 	UInputMappingContext* DefaultMappingContext;

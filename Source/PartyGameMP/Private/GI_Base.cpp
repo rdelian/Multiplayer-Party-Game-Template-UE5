@@ -3,10 +3,10 @@
 
 #include "GI_Base.h"
 #include "Minigames/SumoMinigame.h"
+#include "OnlineSubsystem.h"
 
-UGI_Base::UGI_Base() {
-
-}
+UGI_Base::UGI_Base()
+	: RoundsLeft(3), MinPlayersToStartRound(2), MinigamesDataTable(nullptr) {}
 
 UGI_Base::~UGI_Base() {
 	if (SessionInterfaceRef.IsValid()) {
@@ -16,11 +16,13 @@ UGI_Base::~UGI_Base() {
 
 void UGI_Base::Init() {
 	Super::Init();
-	IOnlineSubsystem* Subsystem = IOnlineSubsystem::Get();
-	if (!Subsystem) return;
+	const IOnlineSubsystem* Subsystem = IOnlineSubsystem::Get();
+	if (!Subsystem)
+		return;
 
 	SessionInterfaceRef = Subsystem->GetSessionInterface();
-	if (!SessionInterfaceRef.IsValid()) return;
+	if (!SessionInterfaceRef.IsValid())
+		return;
 
 	SessionNameKey = FName("TestSession");
 
@@ -35,7 +37,8 @@ void UGI_Base::Init() {
 	SessionInterfaceRef->OnSessionFailureDelegates.AddUObject(this, &UGI_Base::OnSessionFailure);
 
 	if (!MinigamesDataTable) {
-		UE_LOG(LogTemp, Error, TEXT("[%hs]-> MinigamesDataTable must be set in the Class Defaults of the Blueprint"), __FUNCTION__);
+		UE_LOG(LogTemp, Error, TEXT("[%hs]-> MinigamesDataTable must be set in the Class Defaults of the Blueprint"),
+		       __FUNCTION__);
 	}
 
 	UE_LOG(LogTemp, Warning, TEXT("[S] Init()"));
@@ -44,7 +47,7 @@ void UGI_Base::Init() {
 // Network - Sessions
 
 void UGI_Base::CreateServer() {
-	TSharedPtr<FOnlineSessionSettings> SessionSettings = MakeShareable(new FOnlineSessionSettings());
+	const TSharedPtr<FOnlineSessionSettings> SessionSettings = MakeShareable(new FOnlineSessionSettings());
 	SessionSettings->bIsDedicated = false;
 	SessionSettings->bIsLANMatch = (IOnlineSubsystem::Get()->GetSubsystemName() == "NULL");
 	SessionSettings->bAllowJoinInProgress = true;
@@ -52,7 +55,8 @@ void UGI_Base::CreateServer() {
 	SessionSettings->bUsesPresence = true;
 	SessionSettings->NumPublicConnections = 5;
 
-	SessionInterfaceRef->CreateSession(*GetWorld()->GetFirstLocalPlayerFromController()->GetPreferredUniqueNetId(), SessionNameKey, *SessionSettings);
+	SessionInterfaceRef->CreateSession(*GetWorld()->GetFirstLocalPlayerFromController()->GetPreferredUniqueNetId(),
+	                                   SessionNameKey, *SessionSettings);
 
 	UE_LOG(LogTemp, Warning, TEXT("[I] CreateServer()"));
 }
@@ -64,7 +68,8 @@ void UGI_Base::SearchServers() {
 }
 
 void UGI_Base::JoinServer(int32 AtIndex) {
-	SessionInterfaceRef->JoinSession(*GetWorld()->GetFirstLocalPlayerFromController()->GetPreferredUniqueNetId(), SessionNameKey, SessionSearch->SearchResults[AtIndex]);
+	SessionInterfaceRef->JoinSession(*GetWorld()->GetFirstLocalPlayerFromController()->GetPreferredUniqueNetId(),
+	                                 SessionNameKey, SessionSearch->SearchResults[AtIndex]);
 
 	UE_LOG(LogTemp, Warning, TEXT("[I] JoinServer()"));
 }
@@ -86,8 +91,8 @@ void UGI_Base::OnCreateSessionComplete(FName SessionName, bool bWasSuccessful) {
 	UE_LOG(LogTemp, Warning, TEXT("OnCreateSessionComplete -> Server travel to lobby"));
 }
 
-void UGI_Base::OnFindSessionComplete(bool bWasSuccesful) {
-	if (!bWasSuccesful) {
+void UGI_Base::OnFindSessionComplete(bool bWasSuccessful) {
+	if (!bWasSuccessful) {
 		UE_LOG(LogTemp, Warning, TEXT("[E] Failed to find session"));
 		OnSearchingServersComplete.Broadcast();
 		return;
@@ -142,11 +147,12 @@ void UGI_Base::OnSessionFailure(const FUniqueNetId& UserId, ESessionFailure::Typ
 
 void UGI_Base::SetRandomMinigame() {
 	TArray<FName> Rows = MinigamesDataTable->GetRowNames();
-	uint16 RandomIndex = FMath::RandRange(0, Rows.Num() - 1);
+	const uint16 RandomIndex = FMath::RandRange(0, Rows.Num() - 1);
 
 	CurrentMinigameRow = *MinigamesDataTable->FindRow<FMinigameData>(Rows[RandomIndex], nullptr);
 
-	UE_LOG(LogTemp, Warning, TEXT("[%hs] Set \"%s\" as the random minigame"), __FUNCTION__, *CurrentMinigameRow.Title.ToString());
+	UE_LOG(LogTemp, Warning, TEXT("[%hs] Set \"%s\" as the random minigame"), __FUNCTION__,
+	       *CurrentMinigameRow.Title.ToString());
 }
 
 void UGI_Base::ServerTravelToRandomMap() {
@@ -155,7 +161,7 @@ void UGI_Base::ServerTravelToRandomMap() {
 		return;
 	}
 
-	uint8 RandomMapIndex = FMath::RandRange(0, CurrentMinigameRow.Maps.Num() - 1);
+	const uint8 RandomMapIndex = FMath::RandRange(0, CurrentMinigameRow.Maps.Num() - 1);
 
 	GetWorld()->ServerTravel(CurrentMinigameRow.Maps[RandomMapIndex].GetLongPackageName() + "?listen");
 }

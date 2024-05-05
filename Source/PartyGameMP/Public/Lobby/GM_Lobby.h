@@ -16,15 +16,15 @@ UCLASS()
 class PARTYGAMEMP_API AGM_Lobby : public AGameModeBase {
 	GENERATED_BODY()
 
-private:
+	UPROPERTY()
 	TObjectPtr<UGI_Base> GameInstanceRef;
 
 	UFUNCTION(BlueprintCallable)
 	void Start();
 
-	void BeginPlay() override;
+	virtual void BeginPlay() override;
 
-	void HandleStartingNewPlayer_Implementation(APlayerController* NewPlayer) override;
+	virtual void HandleStartingNewPlayer_Implementation(APlayerController* NewPlayer) override;
 
-	void Logout(AController* Exiting) override;
+	virtual void Logout(AController* Exiting) override;
 };

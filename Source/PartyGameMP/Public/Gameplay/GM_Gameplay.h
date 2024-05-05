@@ -5,7 +5,6 @@
 #include "CoreMinimal.h"
 
 #include "GameFramework/GameModeBase.h"
-#include "MyCharacter.h"
 #include "GI_Base.h"
 
 #include "GM_Gameplay.generated.h"
@@ -73,21 +72,21 @@ private:
 	/**
 	 * @brief Generate a new minigame and travel to a random map from that minigame
 	 */
-	void EndRound();
+	void EndRound() const;
 
 	/**
 	 * @brief Travel to Lobby
 	 */
-	void EndMatch();
+	void EndMatch() const;
 
 	/**
 	 * @brief Add the skills component to players pawn based on the current minigame
 	 */
-	void SetPlayersSkills();
+	void SetPlayersSkills() const;
 
 	/**
 	 * @brief Update alive players count and check if the round/match ShouldEnd()
-	 * @param PlayerCharacter Current player pawn
+	 * @param DestroyedActor Current player pawn
 	 */
 	UFUNCTION()
 	void OnPlayerPawnDestroyed(AActor* DestroyedActor);

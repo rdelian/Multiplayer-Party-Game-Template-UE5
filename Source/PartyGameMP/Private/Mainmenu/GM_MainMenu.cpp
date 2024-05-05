@@ -3,11 +3,6 @@
 
 #include "Mainmenu/GM_MainMenu.h"
 
-AGM_MainMenu::AGM_MainMenu()
-{
-	
-}
-
 void AGM_MainMenu::BeginPlay() {
 	Super::BeginPlay();
 

@@ -4,20 +4,18 @@
 #include "MiniGameBase.h"
 #include "Gameplay/GM_Gameplay.h"
 
-AMinigameBase::AMinigameBase()
-{
+AMinigameBase::AMinigameBase() {
 	PrimaryActorTick.bCanEverTick = false;
 }
 
-void AMinigameBase::BeginPlay()
-{
+void AMinigameBase::BeginPlay() {
 	Super::BeginPlay();
 
 	bNetLoadOnClient = false;
 	bReplicates = false;
 
-	UE_LOG(LogTemp, Warning, TEXT("AMinigameBase::BeginPlay() | Auth=%s"), (HasAuthority() ? "y" : "n"));
-	
+	UE_LOG(LogTemp, Warning, TEXT("AMinigameBase::BeginPlay() | Auth=%d"), (HasAuthority() ? 1 : 0));
+
 	GameModeRef = Cast<AGM_Gameplay>(GetWorld()->GetAuthGameMode());
 
 	if (!GameModeRef) {
@@ -28,8 +26,7 @@ void AMinigameBase::BeginPlay()
 	GameModeRef->OnRoundStarted.AddDynamic(this, &AMinigameBase::Start);
 }
 
-void AMinigameBase::Tick(float DeltaTime)
-{
+void AMinigameBase::Tick(float DeltaTime) {
 	Super::Tick(DeltaTime);
 }
 

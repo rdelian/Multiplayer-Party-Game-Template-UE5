@@ -12,10 +12,6 @@
 UCLASS()
 class PARTYGAMEMP_API AGM_MainMenu : public AGameModeBase {
 	GENERATED_BODY()
-
-public:
-	AGM_MainMenu();
-
-private:
-	void BeginPlay() override;
+	
+	virtual void BeginPlay() override;
 };
